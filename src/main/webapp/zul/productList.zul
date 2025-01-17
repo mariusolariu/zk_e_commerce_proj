@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns:n="native" xmlns:h="http://www.w3.org/1999/xhtml">
+    <window  border="normal" width="100%" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.ecommerce.viewmodels.ProductViewModel')">
+        <label value="Product List:" style="font-weight:bold;" />
+        <button label="Add product" style="float:right; margin-bottom: 1rem" onClick="@command('toggleAddProductDialog')"></button>
+        <grid model="@bind(vm.products)" width="100%" emptyMessage="No products available">
+            <columns>
+                <column label="ID" />
+                <column label="Name" />
+                <column label="Price" />
+            </columns>
+            <template name="model" var="product">
+                <row>
+                    <label value="@load(product.id)" />
+                    <label value="@load(product.name)" />
+                    <label value="@load(product.price)" />
+                </row>
+            </template>
+        </grid>
+        <window title="Add product dialog" visible="@load(vm.showAddProductDialog)" >
+            <grid width="50%">
+                <columns>
+                    <column/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="Product name:"></label>
+                        <textbox value="@bind(vm.newProductName)"/>
+                    </row>
+                    <row>
+                        <label value="Product price:"></label>
+                        <textbox value="@bind(vm.newProductPrice)"/>
+                    </row>
+                    <row>
+                        <label></label>
+                        <button label="Submit" onClick="@command('addNewProduct')"></button>
+                    </row>
+                </rows>
+            </grid>
+        </window>
+    </window>
+</zk>
