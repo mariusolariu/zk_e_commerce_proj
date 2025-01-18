@@ -8,12 +8,14 @@
                 <column label="ID" />
                 <column label="Name" />
                 <column label="Price" />
+                <column></column>
             </columns>
             <template name="model" var="product">
                 <row>
                     <label value="@load(product.id)" />
                     <label value="@load(product.name)" />
                     <label value="@load(product.price)" />
+                    <button label="Delete" onClick="@command('deleteProduct', productId=product.id)"></button>
                 </row>
             </template>
         </grid>
