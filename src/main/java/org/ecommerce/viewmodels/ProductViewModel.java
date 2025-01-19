@@ -13,8 +13,11 @@ import java.util.UUID;
 public class ProductViewModel {
     private List<Product> products;
     private boolean showAddProductDialog;
+    private boolean showEditDialog;
+    private Product productToEdit;
     private String newProductName;
     private Double newProductPrice;
+
 
     @Init
     public void init() {
@@ -32,6 +35,19 @@ public class ProductViewModel {
     }
 
     @Command
+    @NotifyChange({"showEditDialog", "productToEdit"})
+    public void toggleEditProductDialog(@BindingParam("productToEdit") Product productToEdit){
+        showEditDialog = !showEditDialog;
+        this.productToEdit = productToEdit;
+    }
+
+    @Command
+    @NotifyChange({"showEditDialog"})
+    public void saveEditedProduct() {
+        showEditDialog = false;
+    }
+
+    @Command
     @NotifyChange({"products", "showAddProductDialog", "newProductName", "newProductPrice"})
     public void addNewProduct() {
         Product newProduct = new Product(
@@ -46,18 +62,35 @@ public class ProductViewModel {
     @Command
     @NotifyChange("products")
     public void deleteProduct(@BindingParam("productId") String productId) {
-        int index = -1;
+        int index = searchProductIndexByProductId(productId);
+        products.remove(index);
+    }
 
+    public int searchProductIndexByProductId(String productId){
         for (int i = 0; i < products.size(); i++) {
             if (products.get(i).getId().equals(productId)) {
-                index = i;
-                break;
+                return i;
             }
         }
 
-        if (index != -1) {
-            products.remove(index);
-        }
+        return -1;
+    }
+
+
+    public boolean isShowEditDialog() {
+        return showEditDialog;
+    }
+
+    public void setShowEditDialog(boolean showEditDialog) {
+        this.showEditDialog = showEditDialog;
+    }
+
+    public Product getProductToEdit() {
+        return productToEdit;
+    }
+
+    public void setProductToEdit(Product productToEdit) {
+        this.productToEdit = productToEdit;
     }
 
     public List<Product> getProducts() {

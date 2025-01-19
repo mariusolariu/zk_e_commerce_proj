@@ -9,6 +9,7 @@
                 <column label="Name" />
                 <column label="Price" />
                 <column></column>
+                <column></column>
             </columns>
             <template name="model" var="product">
                 <row>
@@ -16,11 +17,12 @@
                     <label value="@load(product.name)" />
                     <label value="@load(product.price)" />
                     <button label="Delete" onClick="@command('deleteProduct', productId=product.id)"></button>
+                    <button label="Edit" onClick="@command('toggleEditProductDialog', productToEdit=product)"></button>
                 </row>
             </template>
         </grid>
-        <window title="Add product dialog" visible="@load(vm.showAddProductDialog)" >
-            <grid width="50%">
+        <window title="Add product dialog" visible="@load(vm.showAddProductDialog)" mode="modal" position="center" width="50%" height="30%" >
+            <grid width="100%">
                 <columns>
                     <column/>
                     <column/>
@@ -35,10 +37,34 @@
                         <textbox value="@bind(vm.newProductPrice)"/>
                     </row>
                     <row>
-                        <label></label>
+                        <button label="Cancel" onClick="@command('toggleAddProductDialog')"></button>
                         <button label="Submit" onClick="@command('addNewProduct')"></button>
                     </row>
                 </rows>
+            </grid>
+        </window>
+
+        <window title="Edit Product" visible="@load(vm.showEditDialog)" width="50%" height="50%" mode="modal" position="center">
+            <grid>
+                <columns>
+                    <column></column>
+                    <column></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="Product Name" />
+                        <textbox value="@bind(vm.productToEdit.name)" />
+                    </row>
+                    <row>
+                        <label value="Product Price" />
+                        <decimalbox value="@bind(vm.productToEdit.price)" />
+                    </row>
+                    <row>
+                        <button label="Cancel" onClick="@command('toggleEditProductDialog')" />
+                        <button label="Save" onClick="@command('saveEditedProduct')" />
+                    </row>
+                </rows>
+
             </grid>
         </window>
     </window>
