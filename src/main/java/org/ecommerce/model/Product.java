@@ -1,6 +1,10 @@
 package org.ecommerce.model;
 
+
+//@Entity
 public class Product {
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+//    @Id
     private String id;
     private String name;
     private double price;

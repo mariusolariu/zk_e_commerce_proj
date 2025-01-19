@@ -23,9 +23,7 @@ public class ProductViewModel {
     public void init() {
         // Initialize the product list
         products = new ArrayList<>();
-        products.add(new Product(UUID.randomUUID().toString(), "Laptop", 899.99));
-        products.add(new Product(UUID.randomUUID().toString(), "Smartphone", 499.99));
-        products.add(new Product(UUID.randomUUID().toString(), "Headphones", 79.99));
+        products.add(new Product("1", "Laptop", 2D));
     }
 
     @Command
